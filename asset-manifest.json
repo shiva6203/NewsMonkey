@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/newsmonkey-react/static/css/main.f855e6bc.css",
-    "main.js": "/newsmonkey-react/static/js/main.768de6e8.js",
-    "static/js/453.91e35c1c.chunk.js": "/newsmonkey-react/static/js/453.91e35c1c.chunk.js",
-    "index.html": "/newsmonkey-react/index.html",
-    "main.f855e6bc.css.map": "/newsmonkey-react/static/css/main.f855e6bc.css.map",
-    "main.768de6e8.js.map": "/newsmonkey-react/static/js/main.768de6e8.js.map",
-    "453.91e35c1c.chunk.js.map": "/newsmonkey-react/static/js/453.91e35c1c.chunk.js.map"
+    "main.css": "/NewsMonkey-react/static/css/main.f855e6bc.css",
+    "main.js": "/NewsMonkey-react/static/js/main.d390cdbb.js",
+    "static/js/453.91e35c1c.chunk.js": "/NewsMonkey-react/static/js/453.91e35c1c.chunk.js",
+    "index.html": "/NewsMonkey-react/index.html",
+    "main.f855e6bc.css.map": "/NewsMonkey-react/static/css/main.f855e6bc.css.map",
+    "main.d390cdbb.js.map": "/NewsMonkey-react/static/js/main.d390cdbb.js.map",
+    "453.91e35c1c.chunk.js.map": "/NewsMonkey-react/static/js/453.91e35c1c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.768de6e8.js"
+    "static/js/main.d390cdbb.js"
   ]
 }
