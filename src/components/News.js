@@ -17,11 +17,24 @@ const News = (props) => {
     props.setProgress(10);
     setLoading(true);
 
-    const url = `https://gnews.io/api/v4/top-headlines?topic=${props.category}&lang=en&page=1&max=${props.pageSize}&token=${props.apiKey}`;
+    const url = `https://gnews.io/api/v4/search?q=${props.category}&lang=en&page=1&max=${props.pageSize}&token=${props.apiKey}`;
 
-    let data = await fetch(url);
+    let data;
+    try {
+      data = await fetch(url, { mode: "cors" });
+    } catch (err) {
+      console.error("Fetch failed:", err);
+      setLoading(false);
+      return;
+    }
+
+    if (!data.ok) {
+      console.error("HTTP error:", data.status);
+      setLoading(false);
+      return;
+    }
+
     props.setProgress(30);
-
     let parsedData = await data.json();
     props.setProgress(70);
 
@@ -42,9 +55,21 @@ const News = (props) => {
   const fetchMoreData = async () => {
     const nextPage = page + 1;
 
-    const url = `https://gnews.io/api/v4/top-headlines?topic=${props.category}&lang=en&page=${nextPage}&max=${props.pageSize}&token=${props.apiKey}`;
+    const url = `https://gnews.io/api/v4/search?q=${props.category}&lang=en&page=${nextPage}&max=${props.pageSize}&token=${props.apiKey}`;
 
-    let data = await fetch(url);
+    let data;
+    try {
+      data = await fetch(url, { mode: "cors" });
+    } catch (err) {
+      console.error("Fetch failed:", err);
+      return;
+    }
+
+    if (!data.ok) {
+      console.error("HTTP error:", data.status);
+      return;
+    }
+
     let parsedData = await data.json();
 
     setArticles(articles.concat(parsedData.articles || []));
@@ -79,10 +104,7 @@ const News = (props) => {
                 <NewsItem
                   title={element.title || ""}
                   description={element.description || ""}
-                  imageUrl={
-                    element.image ||
-                    "https://via.placeholder.com/240x180?text=No+Image"
-                  }
+                  imageUrl={element.image || "https://via.placeholder.com/240x180"}
                   newsUrl={element.url}
                   author={element.source?.name || "Unknown"}
                   date={element.publishedAt}
