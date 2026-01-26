@@ -13,6 +13,7 @@ const News = (props) => {
   const capitalizeFirstLetter = (string) =>
     string.charAt(0).toUpperCase() + string.slice(1);
 
+  // 🔹 Load first page
   const updateNews = async () => {
     props.setProgress(10);
     setLoading(true);
@@ -22,8 +23,8 @@ const News = (props) => {
     let data;
     try {
       data = await fetch(url, { mode: "cors" });
-    } catch (err) {
-      console.error("Fetch failed:", err);
+    } catch (error) {
+      console.error("Fetch failed:", error);
       setLoading(false);
       return;
     }
@@ -35,7 +36,7 @@ const News = (props) => {
     }
 
     props.setProgress(30);
-    let parsedData = await data.json();
+    const parsedData = await data.json();
     props.setProgress(70);
 
     setArticles(parsedData.articles || []);
@@ -52,6 +53,7 @@ const News = (props) => {
     // eslint-disable-next-line
   }, [props.category, props.pageSize]);
 
+  // 🔹 Infinite scroll
   const fetchMoreData = async () => {
     const nextPage = page + 1;
 
@@ -60,8 +62,8 @@ const News = (props) => {
     let data;
     try {
       data = await fetch(url, { mode: "cors" });
-    } catch (err) {
-      console.error("Fetch failed:", err);
+    } catch (error) {
+      console.error("Fetch failed:", error);
       return;
     }
 
@@ -70,7 +72,7 @@ const News = (props) => {
       return;
     }
 
-    let parsedData = await data.json();
+    const parsedData = await data.json();
 
     setArticles(articles.concat(parsedData.articles || []));
     setTotalResults(parsedData.totalArticles || 0);
@@ -95,7 +97,7 @@ const News = (props) => {
           dataLength={articles.length}
           next={fetchMoreData}
           hasMore={hasMoreArticles}
-          loader={hasMoreArticles ? <Spinner /> : null}
+          loader={<Spinner />}
           style={{ overflow: 'visible' }}
         >
           <div className="row justify-content-center g-4">
@@ -104,7 +106,10 @@ const News = (props) => {
                 <NewsItem
                   title={element.title || ""}
                   description={element.description || ""}
-                  imageUrl={element.image || "https://via.placeholder.com/240x180"}
+                  imageUrl={
+                    element.image ||
+                    "https://via.placeholder.com/240x180?text=No+Image"
+                  }
                   newsUrl={element.url}
                   author={element.source?.name || "Unknown"}
                   date={element.publishedAt}
